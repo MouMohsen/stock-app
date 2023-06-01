@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DatePickerFilter from "./DatePickerFilter";
 import IntervalFilter from "../components/IntervalFilter";
+import { Grid } from "@nextui-org/react";
+import styles from '../styles/Filters.module.css'
 
 const Filters = ({ onFilterChange }) => {
     const currentDate = new Date();
@@ -28,8 +30,8 @@ const Filters = ({ onFilterChange }) => {
     };
 
     return (
-        <div className="filters">
-            <div className="date-range-filter">
+        <Grid.Container className={styles.filters} gap={2} justify="space-around" alignItems="center">
+            <Grid className={styles.dateRangeFilter}>
                 <DatePickerFilter
                     label="Start Date"
                     selectedDate={startDate}
@@ -40,11 +42,11 @@ const Filters = ({ onFilterChange }) => {
                     selectedDate={endDate}
                     handleDateChange={handleEndDateChange}
                 />
-            </div>
-            <div className="interval-filter">
+            </Grid>
+            <Grid className="interval-filter">
                 <IntervalFilter increaseInterval={increaseInterval} />
-            </div>
-        </div>
+            </Grid>
+        </Grid.Container>
     );
 };
 
