@@ -14,50 +14,58 @@ export const options = {
 
 export default function App() {
   const currentDate = new Date()
-  
-    const [stock, setStock] = useState([])
-    const [startDate, setStartDate] = useState(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000));
-    const [endDate, setEndDate] = useState(currentDate);
+
+  const [stock, setStock] = useState([])
+  const [startDate, setStartDate] = useState(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000));
+  const [endDate, setEndDate] = useState(currentDate);
+  const [interval, setInterval] = useState("1d");
 
 
-    const fetchStockData = () => {
-        fetch(`/api/stock?startDate=${startDate}&endDate=${endDate}`)
-          .then(response => {
+  const increaseInterval = intervalValue => setInterval(intervalValue);
 
-            return response.json()
-          })
-          .then(data => {
-            const formattedData = [
-                ["Day", "L", "O", "C", "H"],
-                ...data.map((item) => [
-                  item.Date,
-                  parseFloat(item.Low),
-                  parseFloat(item.Open),
-                  parseFloat(item.Close),
-                  parseFloat(item.High),
-                ]),
-              ];
+  const fetchStockData = () => {
+    fetch(`/api/stock?startDate=${startDate}&endDate=${endDate}&interval=${interval}`)
+      .then(response => {
 
-              setStock(formattedData);
-          })
-      }
+        return response.json()
+      })
+      .then(data => {
+        const formattedData = [
+          ["Day", "L", "O", "C", "H"],
+          ...data.map((item) => [
+            item.Date,
+            parseFloat(item.Low),
+            parseFloat(item.Open),
+            parseFloat(item.Close),
+            parseFloat(item.High),
+          ]),
+        ];
 
-      useEffect(() => {
-        fetchStockData()
-      }, [startDate, endDate])
+        setStock(formattedData);
+      })
+  }
+
+  useEffect(() => {
+    fetchStockData()
+  }, [startDate, endDate, interval])
 
   return (
     <>
       <DatePickerComponent
         label="Start Date"
-         selectedDate={startDate}
-         handleDateChange={(date) => setStartDate(date)}
+        selectedDate={startDate}
+        handleDateChange={(date) => setStartDate(date)}
       />
       <DatePickerComponent
         label="End Date"
-         selectedDate={endDate}
-         handleDateChange={(date) => setEndDate(date)}
+        selectedDate={endDate}
+        handleDateChange={(date) => setEndDate(date)}
       />
+      <div>
+        <button onClick={() => increaseInterval("1d")}>1D</button>
+        <button onClick={() => increaseInterval("1wk")}>1W</button>
+        <button onClick={() => increaseInterval("1mo")}>1MO</button>
+      </div>
       <Chart
         chartType="CandlestickChart"
         width="100%"
