@@ -1,0 +1,12 @@
+.filters {
+    border: 1px dashed #c1c1c1;
+    border-radius: 25px;
+    margin-bottom: 2rem !important;
+    background-color: #f1f1f1;
+}
+
+.dateRangeFilter {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
