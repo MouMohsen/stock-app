@@ -3,6 +3,7 @@ import DatePickerFilter from "./DatePickerFilter";
 import IntervalFilter from "../components/IntervalFilter";
 import { Grid } from "@nextui-org/react";
 import styles from '../styles/Filters.module.css'
+import SymbolFilter from "./SymbolFilter";
 
 const Filters = ({ onFilterChange }) => {
     const currentDate = new Date();
@@ -12,10 +13,11 @@ const Filters = ({ onFilterChange }) => {
     );
     const [endDate, setEndDate] = useState(currentDate);
     const [interval, setInterval] = useState("1d");
+    const [symbol, setSymbol] = useState("SPUS");
 
     useEffect(() => {
-        onFilterChange({ startDate, endDate, interval });
-    }, [startDate, endDate, interval]);
+        onFilterChange({ startDate, endDate, interval, symbol });
+    }, [startDate, endDate, interval, symbol]);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -29,8 +31,18 @@ const Filters = ({ onFilterChange }) => {
         setInterval(intervalValue);
     };
 
+    const handleSymbolChange = e => {
+        let symbol = e.target.value
+        if (symbol.length > 3 ) {
+            setSymbol(symbol)
+        }
+    }
+
     return (
         <Grid.Container className={styles.filters} gap={2} justify="space-around" alignItems="center">
+            <Grid>
+                <SymbolFilter handleSymbolChange={handleSymbolChange} />
+            </Grid>
             <Grid className={styles.dateRangeFilter}>
                 <DatePickerFilter
                     label="Start Date"

@@ -16,7 +16,7 @@ const CandleStickChart = ({ filters }) => {
   const fetchStockData = async () => {
     try {
       const response = await fetch(
-        `/api/stock?startDate=${filters.startDate}&endDate=${filters.endDate}&interval=${filters.interval}`
+        `/api/stock?startDate=${filters.startDate}&endDate=${filters.endDate}&interval=${filters.interval}&symbol=${filters.symbol}`
       );
       const data = await response.json();
 
