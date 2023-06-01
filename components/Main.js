@@ -4,7 +4,7 @@ import Filters from "./Filters";
 import CandleStickChart from "./Chart";
 
 
-const StockChart = () => {
+const Main = () => {
   const [filterValues, setFilterValues] = useState(null);
 
   const handleFilterChange = (filters) => {
@@ -20,4 +20,4 @@ const StockChart = () => {
   );
 }
 
-export default StockChart
+export default Main

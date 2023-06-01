@@ -2,7 +2,7 @@ import DatePicker from "react-datepicker";
 import { Text } from '@nextui-org/react';
 
 import "react-datepicker/dist/react-datepicker.css";
-import styles from '../styles/Filters.module.css'
+import styles from '../../styles/Filters.module.css'
 
 const DatePickerFilter = ({ label, selectedDate, handleDateChange }) => (
   <div className={styles.datePickerWrapper}>

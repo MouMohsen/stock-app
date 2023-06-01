@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import DatePickerFilter from "./DatePickerFilter";
-import IntervalFilter from "../components/IntervalFilter";
+import DatePickerFilter from "./filters/DatePickerFilter";
+import IntervalFilter from "./filters/IntervalFilter";
 import { Grid } from "@nextui-org/react";
 import styles from '../styles/Filters.module.css'
-import SymbolFilter from "./SymbolFilter";
+import SymbolFilter from "./filters/SymbolFilter";
 
 const Filters = ({ onFilterChange }) => {
     const currentDate = new Date();
