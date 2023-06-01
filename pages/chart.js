@@ -1,13 +1,5 @@
 import { Chart } from "react-google-charts";
-
-export const data = [
-  ["Day", "", "", "", ""],
-  ["Mon", 20, 28, 38, 45],
-  ["Tue", 31, 38, 55, 66],
-  ["Wed", 50, 55, 77, 80],
-  ["Thu", 77, 77, 66, 50],
-  ["Fri", 68, 66, 22, 15],
-];
+import React, { useEffect, useState } from "react"
 
 export const options = {
   legend: "none",
@@ -19,12 +11,39 @@ export const options = {
 };
 
 export default function App() {
+    const [stock, setStock] = useState([])
+    const fetchStockData = () => {
+        fetch("/api/stock")
+          .then(response => {
+
+            return response.json()
+          })
+          .then(data => {
+            const formattedData = [
+                ["Day", "L", "O", "C", "H"],
+                ...data.map((item) => [
+                  item.Date,
+                  parseFloat(item.Low),
+                  parseFloat(item.Open),
+                  parseFloat(item.Close),
+                  parseFloat(item.High),
+                ]),
+              ];
+
+              setStock(formattedData);
+          })
+      }
+
+      useEffect(() => {
+        fetchStockData()
+      }, [])
+
   return (
     <Chart
       chartType="CandlestickChart"
       width="100%"
       height="400px"
-      data={data}
+      data={stock}
       options={options}
     />
   );
